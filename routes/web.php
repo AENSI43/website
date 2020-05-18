@@ -20,3 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(['auth', 'admin'])->prefix('admin-panel')->name('admin-panel.')->group(function (){
+
+    Route::get('', 'ServerController@index')->name('show');
+
+});
