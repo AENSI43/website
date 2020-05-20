@@ -1,22 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" style="max-width: 100vw;">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Admin Panel</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    This is the admin panel !
-                </div>
-            </div>
+        <div class="col-md-5">
+            <server-dashboard name="Production"></server-dashboard>
+        </div>
+        <div class="col-md-5">
+            <server-dashboard name="Development"></server-dashboard>
         </div>
     </div>
 </div>
