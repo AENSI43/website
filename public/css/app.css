@@ -10933,3 +10933,11 @@ a.text-dark:focus {
   }
 }
 
+.console {
+  background-color: black;
+  color: white;
+  padding: 10px 0px 10px 5px;
+  overflow-y: scroll;
+  font-size: 80%;
+}
+
