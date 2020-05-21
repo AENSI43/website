@@ -54,21 +54,21 @@
             updateStatus() {
                 this.runningAction = true
                 this.online = null
-                axios.get('http://fivem-server.project/admin-panel/server-status').then(response => {
+                axios.get('/admin-panel/server-status').then(response => {
                     this.online = response.data
                     this.runningAction = false
                 })
             },
             setOn() {
                 this.runningAction = true
-                axios.get('http://fivem-server.project/admin-panel/server-start').then(response => {
+                axios.get('/admin-panel/server-start').then(response => {
                     this.online = response.data
                     this.runningAction = false
                 })
             },
             setOff() {
                 this.runningAction = true
-                axios.get('http://fivem-server.project/admin-panel/server-stop').then(response => {
+                axios.get('/admin-panel/server-stop').then(response => {
                     this.online = response.data
                     this.runningAction = false
                 })

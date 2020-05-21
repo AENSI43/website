@@ -1967,7 +1967,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.runningAction = true;
       this.online = null;
-      axios.get('http://fivem-server.project/admin-panel/server-status').then(function (response) {
+      axios.get('/admin-panel/server-status').then(function (response) {
         _this2.online = response.data;
         _this2.runningAction = false;
       });
@@ -1976,7 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.runningAction = true;
-      axios.get('http://fivem-server.project/admin-panel/server-start').then(function (response) {
+      axios.get('/admin-panel/server-start').then(function (response) {
         _this3.online = response.data;
         _this3.runningAction = false;
       });
@@ -1985,7 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.runningAction = true;
-      axios.get('http://fivem-server.project/admin-panel/server-stop').then(function (response) {
+      axios.get('/admin-panel/server-stop').then(function (response) {
         _this4.online = response.data;
         _this4.runningAction = false;
       });
