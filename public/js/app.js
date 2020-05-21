@@ -1924,28 +1924,85 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name'],
   data: function data() {
     return {
-      online: false
+      online: null,
+      cmd: [],
+      cmdLoading: false,
+      runningAction: false,
+      updateFreq: 60 * 1000 //seconds
+
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    var _this = this;
+
+    this.updateStatus();
+    this.$interval = setInterval(function () {
+      _this.updateStatus();
+    }, this.updateFreq);
+  },
+  destroyed: function destroyed() {
+    clearInterval(this.$interval);
   },
   components: {
     serverStatus: _ServerStatus_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
+    updateStatus: function updateStatus() {
+      var _this2 = this;
+
+      this.runningAction = true;
+      this.online = null;
+      axios.get('http://fivem-server.project/admin-panel/server-status').then(function (response) {
+        _this2.online = response.data;
+        _this2.runningAction = false;
+      });
+    },
     setOn: function setOn() {
-      this.online = true;
-      console.log(this.online);
+      var _this3 = this;
+
+      this.runningAction = true;
+      axios.get('http://fivem-server.project/admin-panel/server-start').then(function (response) {
+        _this3.online = response.data;
+        _this3.runningAction = false;
+      });
     },
     setOff: function setOff() {
-      this.online = false;
-      console.log(this.online);
+      var _this4 = this;
+
+      this.runningAction = true;
+      axios.get('http://fivem-server.project/admin-panel/server-stop').then(function (response) {
+        _this4.online = response.data;
+        _this4.runningAction = false;
+      });
+    },
+    update: function update() {
+      var _this5 = this;
+
+      this.setOff();
+      this.cmd = [];
+      this.cmdLoading = true;
+      this.runningAction = true;
+      axios.get('http://fivem-server.project/admin-panel/server-update').then(function (response) {
+        _this5.cmdLoading = false;
+        _this5.cmd = response.data.cmd;
+        if (!response.data.error) _this5.setOn();
+        _this5.runningAction = false;
+      });
     }
   }
 });
@@ -37528,7 +37585,12 @@ var render = function() {
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-header" }, [
       _vm._v(_vm._s(_vm.name) + " Server\n"),
-      _vm.online
+      _vm.online == null
+        ? _c("span", {
+            staticClass: "spinner-border spinner-border-sm",
+            attrs: { role: "status", "aria-hidden": "true" }
+          })
+        : _vm.online
         ? _c("span", { staticClass: "badge badge-success" }, [_vm._v("Online")])
         : _c("span", { staticClass: "badge badge-danger" }, [
             _vm._v("Disconnected")
@@ -37541,7 +37603,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-outline-danger",
-              attrs: { type: "button" },
+              attrs: { type: "button", disabled: _vm.runningAction },
               on: {
                 click: function($event) {
                   return _vm.setOff()
@@ -37554,7 +37616,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-outline-success",
-              attrs: { type: "button" },
+              attrs: { type: "button", disabled: _vm.runningAction },
               on: {
                 click: function($event) {
                   return _vm.setOn()
@@ -37563,11 +37625,64 @@ var render = function() {
             },
             [_vm._v("Start")]
           ),
-      _vm._v("\n        This is the admin panel !\n    ")
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-secondary",
+          attrs: { type: "button", disabled: _vm.runningAction },
+          on: {
+            click: function($event) {
+              return _vm.update()
+            }
+          }
+        },
+        [_vm._v("Update")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-secondary",
+          attrs: { type: "button", disabled: _vm.runningAction },
+          on: {
+            click: function($event) {
+              return _vm.updateStatus()
+            }
+          }
+        },
+        [_vm._v("Refresh")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "console mt-3" },
+        [
+          _vm.cmdLoading
+            ? _c("div", { staticClass: "text-center" }, [_vm._m(0)])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.cmd, function(line) {
+            return _c("div", { key: line }, [_vm._v(_vm._s(line))])
+          })
+        ],
+        2
+      )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  }
+]
 render._withStripped = true
 
 

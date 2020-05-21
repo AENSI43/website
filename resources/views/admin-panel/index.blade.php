@@ -7,7 +7,7 @@
             <server-dashboard name="Production"></server-dashboard>
         </div>
         <div class="col-md-5">
-            <server-dashboard name="Development"></server-dashboard>
+            {{-- <server-dashboard name="Development"></server-dashboard> --}}
         </div>
     </div>
 </div>
