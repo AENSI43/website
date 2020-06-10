@@ -22,4 +22,6 @@ Route::prefix('character')->name('character.')->group(function () {
 
     Route::get('active-character', 'CharacterController@get_active_character')->middleware('auth:api')->name('active');
 
+    Route::get('', 'CharacterController@get_all_characters')->middleware('auth:api')->name('all');
+
 });

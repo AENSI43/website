@@ -20,4 +20,17 @@ class CharacterController extends Controller
 
         return response(new CharacterResource($character), 200);
     }
+
+    /**
+     * Get all the user's characters
+     *
+     * @param Illuminate\Http\Request
+     * @return void
+     */
+    public function get_all_characters(Request $request)
+    {
+        $characters = Auth::guard('api')->user()->characters;
+
+        return response(new CharacterResource($characters), 200);
+    }
 }
