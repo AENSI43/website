@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('character')->name('character.')->group(function () {
+
+    Route::get('active-character', 'CharacterController@get_active_character')->middleware('auth:api')->name('active');
+
+});
