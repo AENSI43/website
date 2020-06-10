@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model\Character;
+use App\Models\Character;
 use Faker\Generator as Faker;
 
 $factory->define(Character::class, function (Faker $faker) {
@@ -11,7 +11,7 @@ $factory->define(Character::class, function (Faker $faker) {
         'lastname' => $faker->lastName,
         'birthdate' => $faker->date(),
         'biography' => $faker->text(),
-        'active' => false,
-        'valid' => false
+        'active' => true,
+        'valid' => true
     ];
 });
