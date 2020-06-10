@@ -42,4 +42,20 @@ class User extends Authenticatable
      *
      */
     protected $table = 'web_users';
+
+    /**
+     * The user's characters
+     */
+    public function characters()
+    {
+        return $this->hasMany('App\Models\Character');
+    }
+
+    /**
+     * Retrieve the user's active character
+     */
+    public function active_character()
+    {
+        return $this->characters()->where('active', true)->first();
+    }
 }
