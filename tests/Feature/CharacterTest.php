@@ -35,4 +35,16 @@ class CharacterTest extends TestCase
 
         $response->assertOk();
     }
+
+    public function testGetAllCharacters()
+    {
+        $user = factory(User::class)->create();
+
+        $characters = factory(Character::class, 3)->create();
+        $user->characters()->saveMany($characters);
+
+        $response = $this->actingAs($user, 'api')->getJson('/api/character');
+
+        $response->assertOk();
+    }
 }
